@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Klatreverket – Climbing Gym</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f6f1e9;--card:#fffdf9;--ink:#2d3a33;--mute:#6b7a72;--acc:#5f8f78;--acc2:#d98f6c;--line:#e6dfd2;--wall:#e9e1d3;--map:#e8ebe0;--water:#c4d9e2;--park:#d3e0c8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b211e;--card:#242c28;--ink:#e8eee9;--mute:#9aaba2;--acc:#7fb69b;--acc2:#e3a182;--line:#34403a;--wall:#2d3731;--map:#2b342f;--water:#2e4650;--park:#33473a}}
+:root[data-theme="dark"]{--bg:#1b211e;--card:#242c28;--ink:#e8eee9;--mute:#9aaba2;--acc:#7fb69b;--acc2:#e3a182;--line:#34403a;--wall:#2d3731;--map:#2b342f;--water:#2e4650;--park:#33473a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}h1,h2,h3{line-height:1.15;margin:0}h1{font-size:clamp(2.2rem,6vw,3.6rem);margin:14px 0}h2{font-size:1.8rem;margin-bottom:6px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;align-items:center;gap:14px;padding:12px 20px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav b{flex:1;font-size:1.1rem}.nav nav{display:flex;gap:16px;font-size:.92rem}.nav nav a{text-decoration:none;color:var(--mute)}.nav nav a:hover{color:var(--ink)}
+@media(max-width:620px){.nav nav a:nth-child(-n+2){display:none}}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}section{padding:44px 0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;padding-top:36px}@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.pill{display:inline-block;padding:5px 12px;border-radius:99px;background:color-mix(in srgb,var(--acc) 18%,transparent);font-size:.85rem}
+.sub{color:var(--mute);margin:0 0 4px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between;margin-top:10px;font-size:.9rem;color:var(--mute)}
+.btn{display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:600;text-decoration:none;padding:12px 22px;border-radius:99px;background:var(--acc);color:#fff;transition:transform .15s,filter .15s}.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}.btn.sm{padding:7px 14px;font-size:.85rem}
+#th{border:0;background:none;color:var(--ink);font-size:1.2rem;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 28px rgba(60,50,30,.07)}
+#wall{width:100%;height:auto;display:block;touch-action:manipulation}.hold{cursor:pointer;transition:transform .2s;transform-box:fill-box;transform-origin:center}.hold:hover{transform:scale(1.15)}.hold.on{transform:scale(1.35);stroke:var(--ink);stroke-width:3}
+.tabs{display:flex;gap:8px;margin:14px 0 18px;flex-wrap:wrap}.tabs button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;padding:8px 18px;border-radius:99px;cursor:pointer}.tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.price p{margin:6px 0 0;color:var(--mute);font-size:.9rem}.amt{font-size:1.9rem;font-weight:700;color:var(--acc);margin-top:8px}
+table{width:100%;border-collapse:collapse}td{padding:11px 8px;border-bottom:1px solid var(--line)}tr:last-child td{border:0}td:last-child{text-align:right}tr.today{background:color-mix(in srgb,var(--acc) 15%,transparent);font-weight:700}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g2 .full{grid-column:1/-1}@media(max-width:620px){.g2{grid-template-columns:1fr}}
+label{display:flex;flex-direction:column;gap:5px;font-size:.88rem;color:var(--mute)}input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);border-color:transparent}
+#err{color:#c0583a;margin:0;min-height:1.2em}#ok h3{margin-bottom:8px}#ok dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:10px 0 16px}#ok dt{color:var(--mute)}#ok dd{margin:0}
+.mapbox{position:relative;overflow:hidden;border-radius:16px}#map{width:100%;height:auto;display:block;background:var(--map)}.zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}.zoom button{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.2rem;cursor:pointer}
+.pulse{animation:p 2s infinite;transform-box:fill-box;transform-origin:center}@keyframes p{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+footer{padding:30px 20px 40px;text-align:center;color:var(--mute);font-size:.88rem}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+</style></head><body>
+<header class="nav"><b id="logo"></b><nav><a href="#prices">Prices</a><a href="#hours">Hours</a><a href="#join">Register</a><a href="#find">Find us</a></nav><button id="th" aria-label="Toggle light/dark">◐</button></header>
+<main class="wrap">
+<section class="hero"><div><span class="pill" id="status">…</span><h1>Climb higher.<br>Stay a while.</h1><p class="sub">Boulders, top-rope walls and a friendly crew — for first-timers and seasoned crushers alike. Shoe rental included on intro sessions.</p><div class="row" style="margin-top:18px"><a class="btn" href="#join">Book a session</a><a class="btn ghost" href="#find">Find us</a></div></div>
+<div class="card"><svg id="wall" viewBox="0 0 400 270" role="img" aria-label="Interactive climbing wall"></svg><div class="row sp"><span id="rt"></span><button class="btn sm" id="rnd">Random route</button></div></div></section>
+
+<section id="prices" class="rv"><h2>Prices</h2><p class="sub">All prices in NOK, incl. VAT.</p><div class="tabs" id="tabs"><button data-t="adult" class="on">Adult</button><button data-t="student">Student / Senior</button><button data-t="child">Child (≤15)</button></div><div class="grid" id="pg"></div></section>
+
+<section id="hours" class="rv"><h2>Opening hours</h2><p class="sub">Today is highlighted.</p><div class="card"><table id="ht"></table></div></section>
+
+<section id="join" class="rv"><h2>Register a visit</h2><p class="sub">Tell us when you're coming — we'll get back to you.</p>
+<form id="f" class="card g2" novalidate>
+<label>Full name<input name="name" required autocomplete="name"></label><label>Email<input name="email" type="email" required autocomplete="email"></label>
+<label>Phone (optional)<input name="phone" type="tel" autocomplete="tel"></label><label>Date<input name="date" type="date" required></label>
+<label>Session<select name="session"><option>Intro to climbing (first time)</option><option>Bouldering – drop-in</option><option>Top-rope – drop-in</option><option>Kids' club</option><option>Group / birthday</option></select></label>
+<label>Experience<select name="level"><option>Never climbed</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+<label>People<input name="people" type="number" min="1" max="12" value="1"></label>
+<label class="full">Message (optional)<textarea name="msg" rows="3"></textarea></label>
+<input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px"><button class="btn full" type="submit">Send registration</button><p id="err" class="full"></p></form>
+<div id="ok" class="card" hidden></div></section>
+
+<section id="find" class="rv"><h2>Find us</h2><p class="sub" id="addr"></p><div class="card"><div class="mapbox"><svg id="map" viewBox="0 0 600 300" role="img" aria-label="Map"><rect width="600" height="300" fill="var(--map)"/><path d="M-10 230 C120 180 200 280 330 220 S520 150 620 190 L620 320 L-10 320Z" fill="var(--water)"/><ellipse cx="110" cy="80" rx="90" ry="48" fill="var(--park)"/><ellipse cx="500" cy="70" rx="70" ry="40" fill="var(--park)"/><g stroke="var(--card)" stroke-width="12" fill="none" stroke-linecap="round"><path d="M0 130H600"/><path d="M300 0V300"/><path d="M0 40L600 210"/></g><g stroke="var(--card)" stroke-width="6" fill="none"><path d="M150 0V300M450 0V300M0 210H600"/></g>
+<g id="pin" style="cursor:pointer"><circle class="pulse" cx="300" cy="130" r="14" fill="var(--acc2)"/><path d="M300 150C280 120 276 106 276 98a24 24 0 0 1 48 0c0 8-4 22-24 52Z" fill="var(--acc2)" stroke="#fff" stroke-width="3"/><circle cx="300" cy="98" r="8" fill="#fff"/></g><text id="tip" x="300" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)"></text></svg><div class="zoom"><button id="zi" aria-label="Zoom in">+</button><button id="zo" aria-label="Zoom out">−</button></div></div>
+<div class="row" style="margin-top:14px"><a class="btn" id="gm" target="_blank" rel="noopener">Open in Google Maps</a><a class="btn ghost" id="gd" target="_blank" rel="noopener">Get directions</a></div></div></section>
+</main>
+<footer id="ft"></footer>
+<script>
+// ✏️ EDIT HERE: gym details, prices and hours
+const G={name:"Klatreverket",address:"Storgata 1, 0155 Oslo, Norway",phone:"+47 000 00 000",email:"maxriz2009@gmail.com",
+hours:[["Monday","10:00","22:00"],["Tuesday","10:00","22:00"],["Wednesday","10:00","22:00"],["Thursday","10:00","22:00"],["Friday","10:00","21:00"],["Saturday","10:00","19:00"],["Sunday","11:00","19:00"]],
+prices:{adult:[["Day pass",199,"Unlimited climbing, one day"],["10-visit card",1690,"Valid 12 months, shareable"],["Monthly",699,"Unlimited, cancel any time"],["Shoe rental",40,"Per visit"]],
+student:[["Day pass",159,"Valid student/senior ID"],["10-visit card",1390,"Valid 12 months"],["Monthly",549,"Unlimited, cancel any time"],["Shoe rental",40,"Per visit"]],
+child:[["Day pass",119,"Ages 6–15"],["10-visit card",990,"Valid 12 months"],["Monthly",399,"Unlimited, cancel any time"],["Kids' club",1250,"8 weeks, once weekly"]]}};
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),NOK=n=>n.toLocaleString("nb-NO")+" kr";
+$("#logo").textContent="▲ "+G.name;document.title=G.name+" – Climbing Gym";$("#addr").textContent=G.address;
+$("#ft").innerHTML=`${esc(G.name)} · ${esc(G.address)} · ${esc(G.phone)}<br>Prices and hours shown are examples until confirmed.`;
+$("#th").onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=d?"light":"dark"};
+// Opening hours + live status (Oslo time)
+const tm=s=>{const[h,m]=s.split(":");return h*60+ +m},DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+function oslo(){const p=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Oslo",weekday:"short",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));return{d:DAYS.indexOf(p.weekday),m:(+p.hour%24)*60+ +p.minute}}
+const N=oslo(),H0=G.hours[N.d];
+$("#ht").innerHTML=G.hours.map((h,i)=>`<tr class="${i==N.d?"today":""}"><td>${h[0]}</td><td>${h[1]} – ${h[2]}</td></tr>`).join("");
+$("#status").textContent=N.m>=tm(H0[1])&&N.m<tm(H0[2])?`● Open now · until ${H0[2]}`:N.m<tm(H0[1])?`○ Closed · opens today ${H0[1]}`:`○ Closed · opens tomorrow ${G.hours[(N.d+1)%7][1]}`;
+// Prices
+let T="adult";const pr=()=>$("#pg").innerHTML=G.prices[T].map(([n,v,d])=>`<div class="card price"><h3>${esc(n)}</h3><div class="amt">${NOK(v)}</div><p>${esc(d)}</p></div>`).join("");
+$("#tabs").onclick=e=>{const t=e.target.dataset.t;if(!t)return;T=t;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));pr()};pr();
+// Interactive wall
+let s=11;const rnd=()=>(s=s*16807%2147483647)/2147483647,cols=["#d98f6c","#5f8f78","#e0b75c","#7f9fc4","#b88fb5"],H=[];
+for(let i=0;i<30;i++)H.push({x:28+rnd()*344,y:24+rnd()*222,r:9+rnd()*7,c:cols[i%5],on:0});
+$("#wall").innerHTML=`<rect width="400" height="270" rx="18" fill="var(--wall)"/><polyline id="path" fill="none" stroke="var(--acc2)" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round"/>`+H.map((o,i)=>`<circle class="hold" data-i="${i}" cx="${o.x}" cy="${o.y}" r="${o.r}" fill="${o.c}"/>`).join("");
+function upd(){const a=H.filter(o=>o.on).sort((p,q)=>q.y-p.y),n=a.length;$("#path").setAttribute("points",a.map(o=>o.x+","+o.y).join(" "));$("#rt").textContent=n?`${n} holds · feels like ${["4","4+","5","5+","6A","6B","6C","7A"][Math.min(7,n>>1)]}`:"Tap holds to set your own route";document.querySelectorAll(".hold").forEach((e,i)=>e.classList.toggle("on",!!H[i].on))}
+$("#wall").onclick=e=>{const i=e.target.dataset.i;if(i!=null){H[i].on^=1;upd()}};
+$("#rnd").onclick=()=>{const k=Math.random()*3|0;H.forEach(o=>o.on=0);[...H].sort((a,b)=>b.y-a.y).forEach((o,i)=>{if(i%3==k)o.on=1});upd()};upd();
+// Registration → pre-filled email to the gym owner
+const f=$("#f");f.date.min=new Date().toISOString().slice(0,10);
+f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+if(!d.name.trim()||!/^\S+@\S+\.\S+$/.test(d.email)||!d.date){$("#err").textContent="Please add your name, a valid email and a date.";return}$("#err").textContent="";
+const b=f.querySelector("button[type=submit]"),ok=$("#ok");b.disabled=true;b.textContent="Sending…";
+try{const r=await fetch("/api/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)});if(!r.ok)throw 0;
+ok.hidden=false;ok.innerHTML=`<h3>🎟 You're registered, ${esc(d.name.split(" ")[0])}!</h3><p class="sub">We got your request for ${esc(d.date)} and will reply to ${esc(d.email)}.</p>`;f.reset();f.people.value=1;ok.scrollIntoView({behavior:"smooth",block:"center"})}
+catch(_){$("#err").textContent="Couldn't send right now — please email us at "+G.email+"."}
+b.disabled=false;b.textContent="Send registration"};
+// Map: stylised, zoomable, links to real Google Maps
+let z=1;const mv=()=>{const w=600/z,h=300/z;$("#map").setAttribute("viewBox",`${300-w/2} ${110-h/2} ${w} ${h}`)};
+$("#zi").onclick=()=>{z=Math.min(3,z+.5);mv()};$("#zo").onclick=()=>{z=Math.max(1,z-.5);mv()};
+$("#pin").onclick=()=>{$("#tip").textContent=$("#tip").textContent?"":G.name};
+$("#gm").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(G.name+" "+G.address);
+$("#gd").href="https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(G.name+" "+G.address);
+// Scroll reveal
+const io="IntersectionObserver"in window?new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add("in")),{threshold:.1}):null;
+document.querySelectorAll(".rv").forEach(el=>io?io.observe(el):el.classList.add("in"));
+</script></body></html>
